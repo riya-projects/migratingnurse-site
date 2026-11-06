@@ -24,6 +24,10 @@ Look at it locally: run `python3 -m http.server` in this folder, then open http:
 
 ## Before the email sign-up opens
 
+MailerLite free tier is selected. Keep the form disabled until a server-side integration is approved and connected. GitHub Pages cannot hold API secrets or execute that integration. Never put a MailerLite key in HTML, JavaScript, the repository, Actions logs, or a public form. Astro connects credentials through Nova using the secure key tool; no key is needed for this disabled placeholder.
+
+The activation PR must provide a server-side endpoint with a securely stored MailerLite key and group ID, explicit consent validation, abuse controls, and provider error handling. Keep tracking scripts off. Verify consent, subscribe/unsubscribe behavior and failure handling before enabling the form.
+
 Update `privacy.html` first: name the email service, say what is sent and how often, and give an email
 address for privacy requests. Then switch the form on, in its own pull request.
 
