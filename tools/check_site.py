@@ -5,7 +5,7 @@
   python3 tools/check_site.py --copy DIR   check, then copy exactly those files to DIR (the Pages build)
 
 Published files are everything except .git, .github, tools and README.md. Every page must load
-nothing from another site, link only to published files, carry the full footer, write NCLEX® with
+nothing from another site, link to published files or the approved GitHub privacy notice, carry the full footer, write NCLEX® with
 the mark (title and description included), never state exam status or pass claims, and keep the
 email form fully switched off with a consent checkbox. CSS, JS and SVG files must not reach the network.
 """
@@ -19,6 +19,7 @@ NOT_SAID = [r"\bpreparing for\b", r"\bpass(?:ed|ing)\b", r"\bguarantee", r"\bpas
 URL_ATTRS = {"src", "href", "action", "formaction", "srcset", "poster", "data", "xlink:href", "background"}
 NETWORK = re.compile(r"(?i)\bhttps?:|(?<![:\w])//[a-z0-9-]+\.|@import|url\(\s*['\"]?(?:https?:)?//|"
                      r"\bfetch\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource")
+PRIVACY_LINK = "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
 CONTROLS = {"input", "button", "select", "textarea"}
 
 
@@ -51,7 +52,7 @@ class Page(html.parser.HTMLParser):
         a = dict(attrs)
         for k, v in attrs:
             if k in URL_ATTRS and v is not None:
-                self.urls += [u.strip().split(" ")[0] for u in v.split(",")] if k == "srcset" else [v.strip()]
+                self.urls += [(tag, k, u.strip().split(" ")[0]) for u in v.split(",")] if k == "srcset" else [(tag, k, v.strip())]
         if tag in ("script", "style"):
             self.skip += 1
         elif tag == "footer":
@@ -108,7 +109,9 @@ def check_page(name, page, root, files):
     p.feed(page)
     p.close()
     errors = []
-    for url in p.urls:
+    for tag, attr, url in p.urls:
+        if name == "privacy.html" and tag == "a" and attr == "href" and url == PRIVACY_LINK:
+            continue  # Approved navigation link; never an asset or form endpoint.
         errors += check_url(name, url, root, files)
     if NETWORK.search(" ".join(re.findall(r"(?is)<style\b.*?</style>|\bstyle\s*=\s*(\"[^\"]*\"|'[^']*')", page))):
         errors.append(f"{name}: inline style reaches the network")
@@ -117,8 +120,9 @@ def check_page(name, page, root, files):
     text = norm(p.text)
     for m in re.finditer(r"NCLEX(?!®|-RN®)", text):
         errors.append(f"{name}: NCLEX without ® near {text[max(0, m.start() - 20):m.end() + 20]!r}")
+    claim_text = text.replace("They are not passing-score weights.", "")
     for pat in NOT_SAID:
-        for m in re.finditer(pat, text, re.I):
+        for m in re.finditer(pat, claim_text, re.I):
             errors.append(f"{name}: {m.group(0)!r} (no exam status or pass claims)")
     for tag, a, off in p.controls:
         if not off:

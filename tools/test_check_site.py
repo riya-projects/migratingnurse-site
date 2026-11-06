@@ -68,6 +68,19 @@ class SiteCheck(unittest.TestCase):
         self.assertIn("has name='email'", out)
         self.assertIn("no consent checkbox", out)
 
+    def test_privacy_navigation_is_not_an_asset_exception(self):
+        url = "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+        self.edit("privacy.html", '<a href="' + url + '">', '<script src="' + url + '"></script><a href="' + url + '">')
+        self.assertFails("points off the site")
+
+    def test_only_exact_privacy_url_is_allowed(self):
+        self.edit("privacy.html", 'github-general-privacy-statement">', 'github-general-privacy-statement?extra=1">')
+        self.assertFails("points off the site")
+
+    def test_positive_passing_claim_remains_blocked(self):
+        self.edit("index.html", "They are not passing-score weights.", "These guarantee passing.")
+        self.assertFails("no exam status or pass claims")
+
     def test_assets_and_scripts_cannot_reach_the_network(self):
         self.edit("assets/logo.svg", "</svg>", '<image href="https://x.example/p.png"/></svg>')
         self.edit("app.js", "window.print()", "fetch('/x');window.print()")
