@@ -16,7 +16,7 @@ NOT_PUBLISHED = {".git", ".github", "tools", "README.md"}
 FOOTER = ("Educational use only. Not affiliated with or endorsed by NCSBN. NCLEX® and NCLEX-RN® are "
           "registered trademarks of the National Council of State Boards of Nursing, Inc.")
 NOT_SAID = [r"\bpreparing for\b", r"\bpass(?:ed|ing)\b", r"\bguarantee", r"\bpass rates?\b"]
-URL_ATTRS = {"src", "href", "action", "formaction", "srcset", "poster", "data", "xlink:href", "background"}
+URL_ATTRS = {"src", "href", "action", "formaction", "srcset", "poster", "data", "xlink:href", "background", "ping"}
 NETWORK = re.compile(r"(?i)\bhttps?:|(?<![:\w])//[a-z0-9-]+\.|@import|url\(\s*['\"]?(?:https?:)?//|"
                      r"\bfetch\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource")
 PRIVACY_LINK = "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
