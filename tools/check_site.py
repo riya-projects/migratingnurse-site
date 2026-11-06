@@ -5,7 +5,8 @@
   python3 tools/check_site.py --copy DIR   check, then copy exactly those files to DIR (the Pages build)
 
 Published files are everything except .git, .github, tools and README.md. Every page must load
-nothing from another site, link to published files or the approved GitHub privacy notice, carry the full footer, write NCLEX® with
+nothing from another site. Only privacy.html may link to the exact approved GitHub privacy
+notice via an anchor href; all other links must be published files. Pages carry the full footer and write NCLEX® with
 the mark (title and description included), never state exam status or pass claims, and keep the
 email form fully switched off with a consent checkbox. CSS, JS and SVG files must not reach the network.
 """
@@ -120,7 +121,7 @@ def check_page(name, page, root, files):
     text = norm(p.text)
     for m in re.finditer(r"NCLEX(?!®|-RN®)", text):
         errors.append(f"{name}: NCLEX without ® near {text[max(0, m.start() - 20):m.end() + 20]!r}")
-    claim_text = text.replace("They are not passing-score weights.", "")
+    claim_text = text.replace("They are not passing-score weights.", "", 1) if name == "index.html" else text
     for pat in NOT_SAID:
         for m in re.finditer(pat, claim_text, re.I):
             errors.append(f"{name}: {m.group(0)!r} (no exam status or pass claims)")

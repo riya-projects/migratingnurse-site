@@ -78,8 +78,8 @@ class SiteCheck(unittest.TestCase):
         self.assertFails("points off the site")
 
     def test_positive_passing_claim_remains_blocked(self):
-        self.edit("index.html", "They are not passing-score weights.", "These guarantee passing.")
-        self.assertFails("no exam status or pass claims")
+        self.edit("index.html", "They are not passing-score weights.", "You are passing.")
+        self.assertFails("'passing' (no exam status or pass claims)")
 
     def test_approved_link_is_only_for_privacy_page(self):
         self.edit("index.html", '<a href="privacy.html">Privacy</a>', '<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">Privacy</a>')
@@ -90,8 +90,8 @@ class SiteCheck(unittest.TestCase):
         self.assertFails("points off the site")
 
     def test_claim_beside_negative_disclaimer_is_blocked(self):
-        self.edit("index.html", "They are not passing-score weights.", "They are not passing-score weights. Guaranteed passing.")
-        self.assertFails("no exam status or pass claims")
+        self.edit("index.html", "They are not passing-score weights.", "They are not passing-score weights. You are passing.")
+        self.assertFails("'passing' (no exam status or pass claims)")
 
     def test_assets_and_scripts_cannot_reach_the_network(self):
         self.edit("assets/logo.svg", "</svg>", '<image href="https://x.example/p.png"/></svg>')

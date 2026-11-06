@@ -5,8 +5,8 @@ browser), a privacy page, and an email sign-up that is switched off until it ope
 
 - `index.html`, `privacy.html`, `style.css`, `app.js`, `assets/logo.svg`: the whole site. Nothing is loaded
   from another site: no fonts, analytics, trackers, cookies or third-party forms.
-- `tools/check_site.py`: the checks. Links must go to published files only, only the approved GitHub privacy navigation link may point off the site
-  (pages, CSS, JS and SVG), the full footer must be on every page, NCLEX® must carry its mark
+- `tools/check_site.py`: the checks. Links must go to published files, except the exact approved GitHub privacy
+  URL in an anchor href on `privacy.html`. CSS, JS and SVG cannot reach the network; the full footer must be on every page, NCLEX® must carry its mark
   (title included), and every email-form control must stay switched off and unnamed, with a consent box.
   Tests: `python3 -m unittest discover -s tools -v`.
 - `.github/workflows/checks.yml` runs both on every pull request. `.github/workflows/pages.yml` publishes
