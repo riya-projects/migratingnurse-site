@@ -1,0 +1,23 @@
+:root{--teal:#0A4F5C;--teal2:#0E7C7B;--coral:#C94A2C;--sand:#FBF6EE;--ink:#0A3A45;--gold:#F6B85A}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--sand);color:var(--ink);line-height:1.5;font-size:17px}
+header{background:var(--teal);color:#fff;text-align:center;padding:22px 14px}header img{display:block;margin:0 auto;border-radius:50%}.brand{margin:6px 0 2px;font-size:26px;font-weight:700}.sub{margin:0;color:var(--gold)}
+main{max-width:600px;margin:0 auto;padding:16px}.title{color:var(--coral);font-size:24px;margin:6px 0}main ul{padding-left:20px}main .days{padding-left:0}.lead{margin-top:0}
+.card,.week{background:#fff;border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+h2{color:var(--teal);font-size:21px;margin:0 0 10px}h3{color:var(--teal);margin:6px 0}
+.days{list-style:none;margin:0;padding:0}.days li{border-top:1px solid #e4e8ec}
+.days label{display:flex;gap:10px;align-items:flex-start;padding:11px 2px;cursor:pointer}
+.days input{width:22px;height:22px;margin-top:3px;accent-color:var(--teal2);flex:none}
+.d{background:var(--teal2);color:#fff;font-weight:700;border-radius:8px;padding:2px 8px;font-size:14px;white-space:nowrap;margin-top:2px}
+.t{flex:1}.pill{background:var(--coral);color:#fff;border-radius:999px;font-size:11px;padding:2px 8px;white-space:nowrap}
+input:checked ~ .t{text-decoration:line-through;color:#4f5d65}
+.note{color:var(--ink);font-size:15px;margin:8px 0 0}
+#print{display:block;width:100%;background:var(--coral);color:#fff;border:0;border-radius:12px;padding:15px;font-size:18px;font-weight:700;margin:18px 0}
+.follow{text-align:center;color:var(--teal)}footer{font-size:12px;color:#4a5b66;text-align:center}
+.signup fieldset{border:0;margin:0;padding:0;display:grid;gap:10px}.signup fieldset[disabled]{opacity:.6}
+.signup input[type=email]{font:inherit;padding:11px;border:1px solid #b8c4cb;border-radius:10px;width:100%}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:15px}.consent input{width:22px;height:22px;margin-top:2px;flex:none}
+.signup button{font:inherit;font-weight:700;background:#7b8a93;color:#fff;border:0;border-radius:12px;padding:13px}
+a{color:var(--teal2)}footer p{margin:6px 0}
+#clear{display:block;margin:0 auto 18px;font:inherit;background:none;border:1px solid var(--teal2);color:var(--teal2);border-radius:10px;padding:8px 16px}
+footer{max-width:600px;margin:0 auto;padding:0 16px 30px}
+@media print{header{background:#fff;color:#000}#print,#clear,.signup{display:none}.card,.week{box-shadow:none;break-inside:avoid}}
